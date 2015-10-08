@@ -1,5 +1,6 @@
 package ua.artcode.eshop.service;
 
+import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
 
 import java.util.ArrayList;
@@ -10,9 +11,9 @@ public interface UserService {
     User register(String email, String fullname, String phone, String pass);
 
     // access key
-    String login(String email, String pass);
+    String login(String email, String pass) throws NoUserFoundException;
 
-    User showUserInfo(int id);
+    User showUserInfo(int id) throws NoUserFoundException;
 
     // update info
     void addUserFriend(String accessKey, int id);

@@ -2,6 +2,7 @@ package ua.artcode.eshop.service;
 
 import ua.artcode.eshop.dao.InnerUserDao;
 import ua.artcode.eshop.dao.UserDao;
+import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
 
 import java.util.ArrayList;
@@ -13,27 +14,33 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     // SOLID - Dependency Invertion
-    public UserDao userDao = new InnerUserDao();
+    public UserDao userDao;
+
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public User register(String email, String fullname, String phone, String pass) {
-        // generate id
+        // generate
 
-        new User(0,email,fullname,phone,pass);
-
-
-
-        return null;
+        // with id
+        return userDao.create(new User(email,fullname,phone,pass));
     }
 
     @Override
-    public String login(String email, String pass) {
-        return null;
+    public String login(String email, String pass) throws NoUserFoundException {
+        User user = userDao.find(email);
+
+        // generate access key
+        String accessKey = "123456";
+
+        return accessKey;
     }
 
     @Override
-    public User showUserInfo(int id) {
-        return null;
+    public User showUserInfo(int id) throws NoUserFoundException {
+        return userDao.find(id);
     }
 
     @Override

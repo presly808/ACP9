@@ -1,5 +1,6 @@
 package ua.artcode.eshop.dao;
 
+import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
 
 import java.util.List;
@@ -12,8 +13,8 @@ public interface UserDao {
     // return user with id
     User create(User user);
 
-    User find(int id);
-    User find(String email);
+    User find(int id) throws NoUserFoundException;
+    User find(String email) throws NoUserFoundException;
 
     List<User> findAll();
 
