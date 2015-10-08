@@ -1,0 +1,107 @@
+1. Teoria
+       vi - it helps you editing files in linux based system
+       use Git Bash only
+
+       Git material
+               https://www.atlassian.com/git/tutorials/
+               http://git-scm.com/book/en/v2 (first 3 Chapters)
+               https://try.github.io/levels/1/challenges/1
+               http://www.ex.ua/79601047
+
+    java.io.*;
+
+    class File
+    absolute and relative paths (differences)
+
+    byte Stream (InputStream, OutputStream)
+    char streams (Reader, Writer)
+
+    !!! always close OutputStream and Writer
+
+3. Implement class FileHelper               window analog
+       - show all available commands        help
+       - changeCurrentLocation              cd
+       - find file(dir)                     find
+       - show directoryContent              dir
+       - show file (content)                type
+       - delete file or dir                 del , rd
+       - create dir                         mkdir
+       - create file                        ? )))
+       - show folder structure              tree
+       - copy file                          copy
+       - compare content of files           fc
+
+       * implement commands redirection
+       http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/redirection.mspx?mfr=true
+
+       - deepFind (do search in file name and in file content by keyword)
+           * result of search can be written into file
+
+       -* find in file system without recursion
+       -* show content of folder
+          ex.
+           video - 70%
+           audio - 10%
+           document - 5%
+           other - 15%
+
+4. Implement Java Console Commander using class above (FileHelper)
+    use design pattern MVC, see example https://github.com/presly808/ACP6/tree/master/src/main/java/ua/artcode/kassa
+
+
+5*. Do Remote Java Console Commander
+ using class Socket and ServerSocket
+t
+       vi - it helps you editing files in linux based system
+       use Git Bash only
+
+       Git material
+               https://www.atlassian.com/git/tutorials/
+               http://git-scm.com/book/en/v2 (first 3 Chapters)
+               https://try.github.io/levels/1/challenges/1
+               http://www.ex.ua/79601047
+
+    java.io.*;
+
+    class File
+    absolute and relative paths (differences)
+
+    byte Stream (InputStream, OutputStream)
+    char streams (Reader, Writer)
+
+    !!! always close OutputStream and Writer
+
+3. Implement class FileHelper               window analog
+       - show all available commands        help
+       - changeCurrentLocation              cd
+       - find file(dir)                     find
+       - show directoryContent              dir
+       - show file (content)                type
+       - delete file or dir                 del , rd
+       - create dir                         mkdir
+       - create file                        ? )))
+       - show folder structure              tree
+       - copy file                          copy
+       - compare content of files           fc
+
+       * implement commands redirection
+       http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/redirection.mspx?mfr=true
+
+       - deepFind (do search in file name and in file content by keyword)
+           * result of search can be written into file
+
+       -* find in file system without recursion
+       -* show content of folder
+          ex.
+           video - 70%
+           audio - 10%
+           document - 5%
+           other - 15%
+
+4. Implement Java Console Commander using class above (FileHelper)
+    use design pattern MVC, see example https://github.com/presly808/ACP6/tree/master/src/main/java/ua/artcode/kassa
+
+
+5*. Do Remote Java Console Commander
+ using class Socket and ServerSocket
+u

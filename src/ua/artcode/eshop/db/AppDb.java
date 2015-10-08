@@ -3,6 +3,7 @@ package ua.artcode.eshop.db;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.Product;
 import ua.artcode.eshop.model.User;
+import ua.artcode.week1.hashstructure.MyHashMap;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,6 @@ public class AppDb {
 
     private Map<Integer, User> userMap = new HashMap<>();
     private Map<Integer,Product> productMap = new HashMap<>();
-
 
     public User addUser(User user){
         user.setId(count);

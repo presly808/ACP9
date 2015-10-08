@@ -1,12 +1,9 @@
 package ua.artcode.week1.hashstructure;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created by serhii on 25.09.15.
+ *
  */
 public class MyHashMap<K,V> implements Map<K,V> {
 
@@ -32,11 +29,22 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     @Override
     public boolean containsKey(Object key) {
+        int hash = key.hashCode();
+        int position = Math.abs(hash % table.length);
+
+        Node iter = table[position];
+        while(iter != null){
+            if(iter.key.equals(key)){
+                return true;
+            }
+            iter = iter.next;
+        }
+
         return false;
     }
 
@@ -99,6 +107,11 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
+        Set<? extends K> keys = m.keySet();
+        for (K key : keys) {
+            V value = m.get(key);
+            put(key,value);
+        }
 
     }
 
@@ -109,28 +122,60 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
     @Override
     public Set<K> keySet() {
-        return null;
+        Set<K> vakues = new HashSet<>();
+        Iterator<Node> nodeIterator = new MyHashMapTableIterator();
+        while(nodeIterator.hasNext()){
+            vakues.add((K) nodeIterator.next().key);
+        }
+        return vakues;
+
     }
 
     @Override
     public Collection<V> values() {
-        return null;
+
+        Collection<V> vakues = new LinkedList<>();
+        Iterator<Node> nodeIterator = new MyHashMapTableIterator();
+        while(nodeIterator.hasNext()){
+            vakues.add((V) nodeIterator.next().val);
+        }
+
+        return vakues;
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
+        Set<Entry<K,V>> entries = new HashSet<>();
+        Iterator<Node> nodeIterator = new MyHashMapTableIterator();
+        while(nodeIterator.hasNext()){
+            entries.add(nodeIterator.next());
+        }
 
-
-        return null;
+        return entries;
     }
 
-    private static class MyHashMapTableIterator implements Iterator<Node>{
+    private class MyHashMapTableIterator implements Iterator<Node>{
 
         private Node curr;
+        private int index;
 
         public MyHashMapTableIterator() {
-            // find first current
+            findFirstNotNull();
         }
+
+        private void findFirstNotNull() {
+            for (int i = index; i < table.length ; i++) {
+                if(table[i] != null){
+                    index = i;
+                    curr = table[i];
+                    return;
+                }
+            }
+
+            // if no first not null
+            curr = null;
+        }
+
 
         @Override
         public boolean hasNext() {
@@ -139,7 +184,16 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
         @Override
         public Node next() {
-            return null;
+            Node forRet = curr;
+
+            if(curr.next != null){
+                curr = curr.next;
+            } else {
+                findFirstNotNull();
+            }
+
+
+            return forRet;
         }
     }
 
