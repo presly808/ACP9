@@ -1,5 +1,7 @@
 package ua.artcode.week2.io;
 
+import com.sun.xml.internal.ws.encoding.MtomCodec;
+
 import java.io.*;
 
 /**
@@ -37,6 +39,40 @@ public class IOUtils {
         }
 
         return res;
+    }
+
+    public static byte[] getByteArr(InputStream is){
+        ByteArrayOutputStream byos = new ByteArrayOutputStream();
+
+        try {
+
+            int b = 0;
+            while((b = is.read()) != -1){
+                byos.write(b);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return byos.toByteArray();
+    }
+
+    public static void writeBytes(byte[] arr, String path) throws FileNotFoundException {
+        OutputStream os = new FileOutputStream(path);
+        try{
+            os.write(arr);
+        } catch (IOException ex){
+            ex.printStackTrace();
+        } finally {
+            if(os != null)
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+
     }
 
     public static void writeToFile(String src, String path) throws IOException {
@@ -80,6 +116,26 @@ public class IOUtils {
 
     }
 
+    public static String readAll(InputStream is){
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+
+        try {
+            while((line = br.readLine()) != null){
+                sb.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+
+    }
+
+
+    public static InputStream getClassPathResource(String path){
+        return IOUtils.class.getResourceAsStream(path);
+    }
 
 
 

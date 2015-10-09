@@ -7,9 +7,6 @@ import ua.artcode.eshop.service.UserService;
 
 import java.util.Scanner;
 
-/**
- * Created by serhii on 08.10.15.
- */
 public class UserMenu {
 
     private static final Logger LOG = Logger.getLogger(UserMenu.class);
@@ -24,6 +21,7 @@ public class UserMenu {
     }
 
     public void start(){
+
 
         int choice = -1;
 
