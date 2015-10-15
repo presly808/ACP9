@@ -1,12 +1,8 @@
 package ua.artcode.week2.io;
 
-import com.sun.xml.internal.ws.encoding.MtomCodec;
-
 import java.io.*;
 
-/**
- * Created by serhii on 10/2/15.
- */
+
 public class IOUtils {
 
     public static String readFile(String path) throws FileNotFoundException {

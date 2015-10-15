@@ -2,9 +2,6 @@ package ua.artcode.week3.reflect;
 
 import ua.artcode.eshop.model.User;
 
-/**
- * Created by serhii on 09.10.15.
- */
 public class ShowClassInfoTest {
 
     public static void main(String[] args) throws IllegalAccessException {
