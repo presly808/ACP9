@@ -6,7 +6,11 @@
 
     <groupId>ua.artcode</groupId>
     <artifactId>ACP9</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
+    <modules>
+        <module>RomanMayun</module>
+    </modules>
 
     <properties> <!-- set own variables-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
