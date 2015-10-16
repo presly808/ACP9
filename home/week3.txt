@@ -1,0 +1,33 @@
+
+1.Theoretical material
+    Reflection API
+    
+    XML -> DOM, SAX parsers
+    DTD, XSD -> describe xml structure
+    Annotations
+
+2. To finish(reflection based)  tasks -> see examples 
+https://github.com/presly808/ACP6/blob/c2638e50c70f7e2ed7a63d8ba115d162ce9df9a8/src/main/java/ua/artcode/week4/reflec/ReflectSerializer.java
+    2.1. Serialization using reflection
+        (Save only those fields that were annotated by @ForSave Annotation, first create @ForSave)
+        If field has no default value, just get default value from annotation
+
+2. Implement xml serializer
+   Object -> XML
+   XML -> Object
+   
+   use Dom parser
+
+
+3. Write universal downloader from ex.ua (That helps us download all files from page) - use XPath
+       1. First input url address of page
+       2. then parse page and find urls like "/load/{idOfFile}" ex. href="/load/124701188" (use sax parser)
+       3. Take url adn download file using URL class
+
+5*. Write class Timer, that performs some action in defined period of time
+    - start(long delay, Action action) // Action is your own interface with one method
+    - stop()
+
+6*. Dynamic sorter
+    Sort numbers which are placed in file with defined frequency
+    Use class Timer above

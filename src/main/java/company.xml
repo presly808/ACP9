@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<company> <!-- root -->
+    <user id="23">
+        <name>Serhii</name>
+        <age>23</age>
+        <city>Kiev</city>
+    </user>
+
+    <user id="244">
+        <name>Andriy</name>
+        <age>26</age>
+        <city>Odessa</city>
+    </user>
+
+</company>
