@@ -8,14 +8,19 @@
     <artifactId>ACP9</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+
     <modules>
         <module>RomanMayun</module>
+        <module>SerhiiBilobrov</module>
+        <module>Brytskyi</module>
+        <module>AlexBooldey</module>
     </modules>
 
     <properties> <!-- set own variables-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <log4j.version>1.2.17</log4j.version>
         <junit.version>4.11</junit.version>
+        <jsoup.version>1.8.3</jsoup.version>
     </properties>
 
 
@@ -32,6 +37,14 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

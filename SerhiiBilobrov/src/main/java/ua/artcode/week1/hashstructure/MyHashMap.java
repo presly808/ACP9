@@ -199,7 +199,7 @@ public class MyHashMap<K,V> implements Map<K,V> {
 
 
 
-    private static class Node implements Map.Entry {
+    private static class Node implements Entry {
 
         Object key;
         Object val;

@@ -21,6 +21,14 @@ public class IOUtils {
         return res;
     }
 
+    public static void writeViaPrintWriter(String path) throws IOException, InterruptedException {
+        Writer writer = new PrintWriter(path);
+        long l = System.currentTimeMillis();
+        writer.write(" " + l);
+        writer.flush();
+        System.out.println(readFile(path));
+    }
+
     public static String readFileReader(String path) throws FileNotFoundException {
         Reader is = new FileReader(path);
         String res = "";
