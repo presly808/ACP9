@@ -1,0 +1,21 @@
+ |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+ |~~~~~~~~~~~~~JAVA  TERMINAL~~~~~~~~~~~~~|
+ |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+ |Available commands:                     |
+ | - show all available commands   help   |
+ | - changeCurrentLocation         cd     |
+ | - find file(dir)                find   |
+ | - show directoryContent         dir    |
+ | - show file (content)           type   |
+ | - delete file or dir            del, rd|
+ | - create dir                    mkdir  |
+ | - create file                   cf     |
+ | - show folder structure         tree   |
+ | - copy file                     copy   |
+ | - compare content of files      fc     |
+ | - clear terminal                clear  |
+ | - exit from console             exit   |
+ |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+ | Help Command Example :                 |
+ | $ :cd help  or $ :dir help             |
+ |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
