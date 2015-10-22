@@ -95,17 +95,25 @@ public class UI {
         @Override
         public void actionPerformed(ActionEvent e) {
             int rowindex = table.getSelectedRow();
-            try {
-                progressBar1.setStringPainted(true);
-                controller.download(values[rowindex][1], values[rowindex][0], targetDirectoryField.getText());
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        controller.download(values[rowindex][1], values[rowindex][0], targetDirectoryField.getText());
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+
+                }
+            };
+            progressBar1.setStringPainted(true);
+            thread.start();
         }
     };
 
     public void changeStatusBar(int value) {
         progressBar1.setValue(value);
+
     }
 
 
