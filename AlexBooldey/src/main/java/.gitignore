@@ -4,3 +4,5 @@
 out/
 temp/
 target/
+.gitignore
+heap/

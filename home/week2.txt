@@ -43,7 +43,7 @@
            video - 70%
            audio - 10%
            document - 5%
-           other - 15%
+           target - 15%
 
 4. Implement Java Console Commander using class above (FileHelper)
     use design pattern MVC, see example https://github.com/presly808/ACP6/tree/master/src/main/java/ua/artcode/kassa
@@ -96,7 +96,7 @@ t
            video - 70%
            audio - 10%
            document - 5%
-           other - 15%
+           target - 15%
 
 4. Implement Java Console Commander using class above (FileHelper)
     use design pattern MVC, see example https://github.com/presly808/ACP6/tree/master/src/main/java/ua/artcode/kassa
