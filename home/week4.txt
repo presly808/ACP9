@@ -1,0 +1,53 @@
+1. 	Build tool - Maven
+	- OS variables: JAVA_HOME, M2_HOME
+	- folder structure
+	- pom.xml
+	
+	lifecycle -> sequence of goals
+	goals - actions of plugin
+
+	- dependencies
+	- local and remote repositories
+
+	Multithreading
+
+        Lifecycle of threads
+        synchronized blocks and methods
+        Threads synchronization(wait, notify, notifyAll)
+
+        http://docs.oracle.com/javase/tutorial/essential/concurrency/
+        http://www.periodicooficial.oaxaca.gob.mx/files/2011/05/EXT02-2011-05-19.pdf
+
+
+    all information learn by doing, write notes and draw all steps
+
+    Design Pattern
+        pattern Observer
+
+   Recommended material
+   video Golovach  http://habrahabr.ru/company/golovachcourses/blog/256883/
+   book http://www.researchgate.net/publication/220689547_Java_Concurrency_in_Practice
+
+2. Write own scheduler task
+   That helps to run some task periodically
+
+3. Implement search in file system without recursion (use queue)
+
+4. Implement search in file system using (Threads): ThreadPool -> ExecutorService + Callable
+
+5. Implement multithreading downloading from ex.ua using Producer-Consumer pattern
+	You input some key word and start point(url), then start recursive searching
+	When page find url, go inside and find other url in page
+	When find file url ask about downloading(you can stop downloading at any time)
+
+	One threads go through pages, other download files
+	pattern ProducerConsumer
+	
+8*. Implement asynchronous chat that allows communication with two and more users
+        Must have
+        - (saving history of messages into the file)
+        - read connections setting(port, max users size, list of banned users)
+            from server_settings.properties (see class Properties)
+        - send message using Serialization (ObjectOutputStream, ObjectInputStream)
+        - for better architecture of application see pattern Observer
+        - * write UI based on Swing
