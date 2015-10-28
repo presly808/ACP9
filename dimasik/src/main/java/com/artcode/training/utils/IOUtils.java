@@ -1,9 +1,6 @@
 package com.artcode.training.utils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class IOUtils {
 
@@ -39,5 +36,21 @@ public class IOUtils {
             folder.delete();
         }
         return folder.mkdir();
+    }
+
+    public static String readAll(InputStream is){
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = "";
+
+        try {
+            while((line = br.readLine()) != null){
+                sb.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+
     }
 }

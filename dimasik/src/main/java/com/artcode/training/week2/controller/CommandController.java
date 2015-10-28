@@ -19,6 +19,11 @@ public class CommandController {
         this.scanner = new Scanner(inputStream);
     }
 
+    public CommandController(Scanner scanner) {
+        this.currentFile = new File("").getAbsoluteFile();
+        this.scanner = scanner;
+    }
+
     public String readInputCommand() {
         try {
             String input = scanner.nextLine();
