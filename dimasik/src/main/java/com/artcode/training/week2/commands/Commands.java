@@ -9,6 +9,7 @@ public enum Commands {
     DEL(new DeleteFileCommand()),
     RD(new DeleteDirectoryCommand()),
     MKDIR(new CreateDirectoryCommand()),
+    FIND(new FindFileByNameUsingQueueCommand()),
     HELP(new HelpCommand());
 
     private AbstractCommand command;
