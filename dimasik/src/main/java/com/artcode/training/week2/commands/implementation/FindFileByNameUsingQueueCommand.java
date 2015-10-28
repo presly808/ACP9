@@ -10,7 +10,7 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
     public static final int DEFAULT_THREADS_AMOUNT = 10;
     public int threadsAmount;
     private String filename;
-    private List<String> result;
+    private List<String> result = new ArrayList<>();
     private Queue<File> directories = new PriorityQueue<>();
     private final Object resultMonitor = new Object();
     private final Object directoriesMonitor = new Object();
