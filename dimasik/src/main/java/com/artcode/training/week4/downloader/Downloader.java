@@ -68,47 +68,7 @@ public class Downloader {
                         pagesStream = newPages.stream();
                     }
                     pagesStream.filter(this::askForPageProcessing).forEach(s -> {
-                        service.submit(new LinkSearchingThread(prefix, s));
-                        synchronized (newPagesMonitor) {
-                            newPages.remove(s);
-                        }
-                    });
-                } else {
-                    synchronized (newPagesMonitor) {
-                        try {
-                            newPagesMonitor.wait(10000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }
-
-    class FileAskingThread implements Runnable {
-
-        private PrintStream outs;
-        private Scanner sc;
-        private ExecutorService service;
-        private String prefix;
-
-        public FileAskingThread(PrintStream outs, InputStream is, String prefix) {
-            this.outs = outs;
-            this.sc = new Scanner(is);
-            this.prefix = prefix;
-            service = Executors.newFixedThreadPool(25);//todo flexible
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                if (!fileLinks.isEmpty()) {
-                    Stream<String> linksStream;
-                    synchronized (linksMonitor) {
-//                        linksStream = fileLinks.entrySet().stream().forEach(stringMapEntry -> stringMapEntry.getValue().entrySet().stream());
-                    }
-                    linksStream.filter(this::askForPageProcessing).forEach(s -> {
-                        service.submit(new LinkSearchingThread(prefix, s));
+                        service.execute(new LinkSearchingThread(prefix, s));
                         synchronized (newPagesMonitor) {
                             newPages.remove(s);
                         }
@@ -138,6 +98,58 @@ public class Downloader {
         }
     }
 
+    class FileAskingThread implements Runnable {
+
+        private PrintStream outs;
+        private Scanner sc;
+        private ExecutorService service;
+
+        public FileAskingThread(PrintStream outs, InputStream is) {
+            this.outs = outs;
+            this.sc = new Scanner(is);
+            service = Executors.newFixedThreadPool(25);//todo flexible
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                if (!fileLinks.isEmpty()) {
+                    Stream<Map.Entry<String, Map<String, String>>> linksStream;
+                    synchronized (linksMonitor) {
+                        linksStream = fileLinks.entrySet().stream();
+                    }
+                    linksStream.forEach(stringMapEntry -> {
+                        stringMapEntry.getValue().entrySet().stream().filter(entry -> askForFileDownloading(entry.getKey())).
+                                forEach(entry1 -> service.execute(new FileDownloadingThread(entry1.getValue(), stringMapEntry.getKey(), entry1.getKey())));
+                        synchronized (linksMonitor) {
+                            fileLinks.remove(stringMapEntry.getKey());
+                        }
+                    });
+                } else {
+                    synchronized (linksMonitor) {
+                        try {
+                            linksMonitor.wait(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        private boolean askForFileDownloading(String s) {
+            String page;
+            try {
+                page = IOUtils.makeCorrectFolderName(Jsoup.connect(s).get().title());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            outs.printf("Do you want to process page %s?", page);
+            return ("y").equalsIgnoreCase(sc.nextLine());
+        }
+    }
+
     class LinkSearchingThread implements Runnable {
         public static final String ALL_FILES = "a[href^=/load/]:not([href*=?fs_id=])";
         private static final String TITLES = "a[href^=/get/][title]";
@@ -152,11 +164,12 @@ public class Downloader {
 
         @Override
         public void run() {
-            Document doc = null;
+            Document doc;
             try {
                 doc = Jsoup.connect(prefix + particularPage).get();
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
             }
             Elements links = doc.select(ALL_FILES);
             Elements linkTitles = doc.select(TITLES);
