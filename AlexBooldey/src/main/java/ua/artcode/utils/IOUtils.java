@@ -135,6 +135,30 @@ public class IOUtils {
     public static InputStream getClassPathResource(String path) {
         return IOUtils.class.getResourceAsStream(path);
     }
+
+
+
+    public static void closeIn(InputStream in) {
+        if (in != null) {
+            try {
+                in.close();
+                System.out.println("Stream closed");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void closeOut(OutputStream out) {
+        if (out != null) {
+            try {
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
 
 
