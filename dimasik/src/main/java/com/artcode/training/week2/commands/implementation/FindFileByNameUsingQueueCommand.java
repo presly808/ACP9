@@ -7,10 +7,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class FindFileByNameUsingQueueCommand extends AbstractCommand {
-    public static final int DEFAULT_THREADS_AMOUNT = 10;
+    public static final int DEFAULT_THREADS_AMOUNT = 25;
+    public static final String DELIMITER_FOR_RESULT = "\n";
     public int threadsAmount;
     private String filename;
-    private List<String> result = new ArrayList<>();
+    private List<String> result;
     private Queue<File> directories = new PriorityQueue<>();
     private final Object resultMonitor = new Object();
     private final Object directoriesMonitor = new Object();
@@ -23,6 +24,7 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
 
     @Override
     public String execute(File file, String... args) {
+        result = new ArrayList<>();
         this.filename = args[0];
         if (args.length > 1) {
             threadsAmount = Integer.parseInt(args[1]);
@@ -37,15 +39,21 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return String.join("\n", result);
+        newCurrentFile = file;
+        return String.join(DELIMITER_FOR_RESULT, result);
     }
 
     class SearchThreadsProducer implements Runnable {
+
+        public static final int PING_THREADS_DELAY = 1000;
+        public static final int WAIT_FOR_FOLDER_TIMEOUT = 5000;
+        public static final int WAIT_FOR_THREAD_FINISH_TIMEOUT = 3000;
+
         @Override
         public void run() {
             List<Thread> searchingThreads = new ArrayList<>();
-            while (!directories.isEmpty() && !searchingThreads.isEmpty()) {
-                if (searchingThreads.size() < threadsAmount) {
+            while (!directories.isEmpty()) {
+                if (searchingThreads.size() < threadsAmount && !directories.isEmpty()) {
                     Thread searchingThread;
                     synchronized (directoriesMonitor) {
                         searchingThread = new Thread(new SearchThread(directories.remove()));
@@ -53,25 +61,34 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
                     searchingThreads.add(searchingThread);
                     searchingThread.start();
                 } else {
-                    while (true) {
+                    //wait until some thread will finish his job
+                    while (searchingThreads.size() == threadsAmount) {
+                        searchingThreads = searchingThreads.stream().filter(Thread::isAlive).collect(Collectors.toList());
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(PING_THREADS_DELAY);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        searchingThreads = searchingThreads.stream().filter(Thread::isAlive).collect(Collectors.toList());
                     }
                 }
-                if (directories.isEmpty()) {
+                if (directories.isEmpty()) { // wait for new folder
                     synchronized (directoriesMonitor) {
                         try {
-                            wait(5000);
+                            directoriesMonitor.wait(WAIT_FOR_FOLDER_TIMEOUT);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }
             }
+            //wait for all threads
+            searchingThreads.stream().forEach((thread) -> {
+                try {
+                    thread.join(WAIT_FOR_THREAD_FINISH_TIMEOUT);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -86,16 +103,17 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
         public void run() {
             List<String> currentResult = Arrays.stream(directory.listFiles()).map(File::getAbsolutePath).filter(s -> s.endsWith(File.separator + filename)).collect(Collectors.toList());
             if (!currentResult.isEmpty()) {
+                String joinedResult = String.join(DELIMITER_FOR_RESULT, currentResult);
                 synchronized (resultMonitor) {
-                    result.add(String.join("\n", currentResult));
-                }
-            } else {
-                List<File> newDirectories = Arrays.stream(directory.listFiles()).filter(File::isDirectory).collect(Collectors.toList());
-                synchronized (directoriesMonitor) {
-                    directories.addAll(newDirectories);
-                    directoriesMonitor.notify();
+                    result.add(joinedResult);
                 }
             }
+            List<File> newDirectories = Arrays.stream(directory.listFiles()).filter(File::isDirectory).collect(Collectors.toList());
+            if (!newDirectories.isEmpty()) {
+                synchronized (directoriesMonitor) {
+                directories.addAll(newDirectories);
+                directoriesMonitor.notify();
+            }}
         }
     }
 }
