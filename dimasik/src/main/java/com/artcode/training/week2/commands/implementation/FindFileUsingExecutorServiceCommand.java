@@ -4,9 +4,10 @@ import com.artcode.training.week2.commands.AbstractCommand;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class FindFileByNameUsingQueueCommand extends AbstractCommand {
+public class FindFileUsingExecutorServiceCommand extends AbstractCommand {
     public static final int DEFAULT_THREADS_AMOUNT = 25;
     public static final String DELIMITER_FOR_RESULT = "\n";
     public int threadsAmount;
@@ -18,8 +19,8 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
 
     @Override
     public String help() {
-        return "find <file name> <threads limit> - search for file using limited amount of threads\n"
-                + "find <file name> - search for file";
+        return "search <file name> <threads limit> - search for file using limited amount of threads\n"
+                + "search <file name> - search for file";
     }
 
     @Override
@@ -45,31 +46,16 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
 
     class SearchThreadsProducer implements Runnable {
 
-        public static final int PING_THREADS_DELAY = 1000;
         public static final int WAIT_FOR_FOLDER_TIMEOUT = 5000;
         public static final int WAIT_FOR_THREAD_FINISH_TIMEOUT = 3000;
 
         @Override
         public void run() {
-            List<Thread> searchingThreads = new ArrayList<>();
+            ExecutorService service = Executors.newFixedThreadPool(threadsAmount);
+            List<Future<String>> futureList = new ArrayList<>();
             while (!directories.isEmpty()) {
-                if (searchingThreads.size() < threadsAmount && !directories.isEmpty()) {
-                    Thread searchingThread;
-                    synchronized (directoriesMonitor) {
-                        searchingThread = new Thread(new SearchThread(directories.remove()));
-                    }
-                    searchingThreads.add(searchingThread);
-                    searchingThread.start();
-                } else {
-                    //wait until some thread will finish his job
-                    while (searchingThreads.size() == threadsAmount) {
-                        searchingThreads = searchingThreads.stream().filter(Thread::isAlive).collect(Collectors.toList());
-                        try {
-                            Thread.sleep(PING_THREADS_DELAY);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                synchronized (directoriesMonitor) {
+                    futureList.add(service.submit(new SearchThread(directories.remove())));
                 }
                 if (directories.isEmpty()) { // wait for new folder
                     synchronized (directoriesMonitor) {
@@ -81,18 +67,23 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
                     }
                 }
             }
-            //wait for all threads
-            searchingThreads.stream().forEach((thread) -> {
+            //collect all results
+            futureList.parallelStream().forEach(stringFuture -> {
                 try {
-                    thread.join(WAIT_FOR_THREAD_FINISH_TIMEOUT);
-                } catch (InterruptedException e) {
+                    String threadResult = stringFuture.get(WAIT_FOR_THREAD_FINISH_TIMEOUT, TimeUnit.MILLISECONDS);
+                    if (!threadResult.isEmpty()) {
+                        synchronized (resultMonitor) {
+                            result.add(threadResult);
+                        }
+                    }
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
                     e.printStackTrace();
                 }
             });
         }
     }
 
-    class SearchThread implements Runnable {
+    class SearchThread implements Callable<String> {
         private File directory;
 
         public SearchThread(File directory) {
@@ -100,14 +91,7 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
         }
 
         @Override
-        public void run() {
-            List<String> currentResult = Arrays.stream(directory.listFiles()).map(File::getAbsolutePath).filter(s -> s.endsWith(File.separator + filename)).collect(Collectors.toList());
-            if (!currentResult.isEmpty()) {
-                String joinedResult = String.join(DELIMITER_FOR_RESULT, currentResult);
-                synchronized (resultMonitor) {
-                    result.add(joinedResult);
-                }
-            }
+        public String call() throws Exception {
             List<File> newDirectories = Arrays.stream(directory.listFiles()).filter(File::isDirectory).collect(Collectors.toList());
             if (!newDirectories.isEmpty()) {
                 synchronized (directoriesMonitor) {
@@ -115,6 +99,7 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
                     directoriesMonitor.notify();
                 }
             }
+            return String.join(DELIMITER_FOR_RESULT, Arrays.stream(directory.listFiles()).map(File::getAbsolutePath).filter(s -> s.endsWith(File.separator + filename)).collect(Collectors.toList()));
         }
     }
 }

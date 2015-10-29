@@ -10,6 +10,7 @@ public enum Commands {
     RD(new DeleteDirectoryCommand()),
     MKDIR(new CreateDirectoryCommand()),
     FIND(new FindFileByNameUsingQueueCommand()),
+    SEARCH(new FindFileUsingExecutorServiceCommand()),
     HELP(new HelpCommand());
 
     private AbstractCommand command;
