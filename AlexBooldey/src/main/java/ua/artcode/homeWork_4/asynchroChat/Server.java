@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -18,13 +18,13 @@ public class Server {
     private ServerSocket server;
 
     private BlockingDeque<String> messages;
-    private Set<Connection> clients;
+    private List<Connection> clients;
     Connection connection;
 
     {
         new Thread(new SendMessages()).start();
         messages = new LinkedBlockingDeque<>(1);
-        clients = new HashSet<>();
+        clients = new LinkedList<>();
     }
 
     public void start() throws IOException {
