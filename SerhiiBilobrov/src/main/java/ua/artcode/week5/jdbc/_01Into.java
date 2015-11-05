@@ -4,9 +4,6 @@ import ua.artcode.week5.jdbc.utils.JDBCUtils;
 
 import java.sql.*;
 
-/**
- * Created by serhii on 30.10.15.
- */
 public class _01Into {
 
 

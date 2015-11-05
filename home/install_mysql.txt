@@ -1,0 +1,53 @@
+1. Download mysql https://dev.mysql.com/downloads/windows/installer/5.7.html
+
+2. Install
+    super user
+    login root
+    pass root
+
+    Enable or Disable Autostart
+
+3. Install GUI client , if it wasn't installed MySql Workbench
+
+    cmd -
+4. C:\Progr..\My SQL\MySql Server..\bin
+      mysqld.exe
+
+      mysql.exe
+
+5. MySql client using or Start->Search "Command Line Client"
+
+    mysql -u root -p
+
+    commands
+
+    show databases;
+    create database <my_db>;
+
+    use <my_db>;
+
+    DDL or DML
+
+6. JAVA + MYSQL
+
+    url template = jdbc:mysql://localhost:3306/<my_db>
+
+7. Maven dependency
+
+    <dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.6</version>
+    </dependency>
+
+8. Load driver
+    Class.forName("com.mysql.jdbc.Driver");
+
+9. Try to run classwork example
+
+
+
+
+
+
+
