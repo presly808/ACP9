@@ -4,19 +4,20 @@
              version="2.0">
 
     <!--some indetifier-->
-    <persistence-unit name="hibernate-unit" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="eshop-unit" transaction-type="RESOURCE_LOCAL">
         <description>
             Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
         </description>
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>ua.artcode.week6.jpa.model.Group</class>
+        <class>ua.artcode.eshop.model.User</class>
+        <class>ua.artcode.eshop.model.Product</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <!--data base must be created before init persistence.xml -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/univer" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/eshop" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
             <property name="javax.persistence.jdbc.password" value="1234" />
 

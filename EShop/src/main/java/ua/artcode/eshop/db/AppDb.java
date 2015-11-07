@@ -3,7 +3,6 @@ package ua.artcode.eshop.db;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.Product;
 import ua.artcode.eshop.model.User;
-import ua.artcode.week1.hashstructure.MyHashMap;
 
 import java.util.HashMap;
 import java.util.List;

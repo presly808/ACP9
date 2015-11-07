@@ -9,19 +9,11 @@
         <version>1.0</version>
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>ua.artcode</groupId>
-            <artifactId>EShop</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
-
-    <artifactId>SerhiiBilobrov</artifactId>
+    <artifactId>EShop</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>SerhiiBilobrov</name>
+    <name>EShop</name>
     <url>http://maven.apache.org</url>
 
 
