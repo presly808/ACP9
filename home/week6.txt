@@ -1,0 +1,19 @@
+1. ORM, JPA, Hibernate
+
+	Annotated Classes <- CLASSPATH/META-INF/persistence.xml <- EntityManagerFactory<-EntityManager
+
+	OneToMany, OneToOne, ManyToMany
+	fetch(EAGER,LAZY)
+	cascade
+
+	Entity Lifecycle
+
+	JPQL 
+
+2. Add JPA + Hibernate to your project or to week5StudentTask
+
+3. Cache in JPA
+
+4. Inheritance in JPA
+
+YOU MUST PRESENT ME YOUR HOMEWORK OR PROJECT!!! DONT FORGET IT
