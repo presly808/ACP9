@@ -1,6 +1,9 @@
 package ua.artcode.eshop.dao;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
 
@@ -10,25 +13,26 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-/**
- * Created by serhii on 06.11.15.
- */
+//<bean id="jPAUserDao" class="">
+@Repository("jpaUserDao")
 public class JPAUserDao implements UserDao {
 
     private static final Logger LOG = Logger.getLogger(JPAUserDao.class);
 
+    @Autowired
     private EntityManagerFactory factory;
 
-    private EntityManager manager;
+
+    public JPAUserDao() {
+    }
 
     public JPAUserDao(EntityManagerFactory factory) {
         this.factory = factory;
-        manager = factory.createEntityManager();
     }
 
     @Override
     public User create(User user) {
-
+        EntityManager manager = factory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
         try{
             transaction.begin();
@@ -46,6 +50,7 @@ public class JPAUserDao implements UserDao {
 
     @Override
     public User find(int id) throws NoUserFoundException {
+        EntityManager manager = factory.createEntityManager();
         try{
             User found = manager.find(User.class, id);
 
@@ -64,6 +69,7 @@ public class JPAUserDao implements UserDao {
     @Override
     public User find(String email) throws NoUserFoundException {
         // jpql -> sql
+        EntityManager manager = factory.createEntityManager();
         TypedQuery<User> typedQuery =
                 manager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
 

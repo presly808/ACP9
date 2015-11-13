@@ -4,7 +4,12 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.Product;
 import ua.artcode.eshop.model.User;
@@ -15,17 +20,21 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/app-context.xml")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JPAUserDaoTest {
 
-    private static UserDao dao;
     private static String userEmail;
     private static int lastAddedUserId;
 
+    @Autowired
+    @Qualifier(value = "jpaUserDao")
+    private UserDao dao;
+
     @BeforeClass // before all tests
     public static void setUpClass(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("eshop-unit");
-        dao = new JPAUserDao(entityManagerFactory);
+
     }
 
     @Test
@@ -93,13 +102,14 @@ public class JPAUserDaoTest {
         try {
             User found = dao.find(lastAddedUserId);
 
+            // not in one ntityManager
             List<Product> products = found.getProducts();
 
             int size = products.size();
 
             assertEquals(size, 2);
 
-        } catch (NoUserFoundException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

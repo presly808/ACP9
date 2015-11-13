@@ -2,6 +2,7 @@ package ua.artcode.eshop.dao;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ua.artcode.eshop.db.AppDb;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
@@ -11,11 +12,15 @@ import java.util.List;
 /**
  *
  */
+@Repository
 public class InnerUserDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger(InnerUserDao.class);
 
     private AppDb appDb;
+
+    public InnerUserDao() {
+    }
 
     public InnerUserDao(AppDb appDb) {
         this.appDb = appDb;

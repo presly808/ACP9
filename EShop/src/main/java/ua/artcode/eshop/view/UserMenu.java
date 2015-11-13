@@ -1,22 +1,33 @@
 package ua.artcode.eshop.view;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.artcode.eshop.exception.NoUserFoundException;
 import ua.artcode.eshop.model.User;
 import ua.artcode.eshop.service.UserService;
 
 import java.util.Scanner;
 
+@Component
 public class UserMenu {
 
     private static final Logger LOG = Logger.getLogger(UserMenu.class);
     public static final int EXIT_CODE = 5;
 
+    @Autowired
     private UserService userService;
     private Scanner input;
 
+    public UserMenu() {
+
+    }
+
     public UserMenu(UserService userService) {
         this.userService = userService;
+    }
+
+    {
         input = new Scanner(System.in);
     }
 

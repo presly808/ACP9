@@ -1,5 +1,8 @@
 package ua.artcode.eshop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import ua.artcode.eshop.dao.InnerUserDao;
 import ua.artcode.eshop.dao.UserDao;
 import ua.artcode.eshop.exception.NoUserFoundException;
@@ -11,10 +14,16 @@ import java.util.List;
 /**
  *
  */
+@Service
 public class UserServiceImpl implements UserService {
 
     // SOLID - Dependency Invertion
+    @Autowired
+    @Qualifier(value = "jpaUserDao")
     public UserDao userDao;
+
+    public UserServiceImpl() {
+    }
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;

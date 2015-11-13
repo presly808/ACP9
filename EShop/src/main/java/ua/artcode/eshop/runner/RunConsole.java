@@ -22,16 +22,8 @@ public class RunConsole {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("app-context.xml");
 
-        EntityManagerFactory f2 = applicationContext.getBean(EntityManagerFactory.class);
-        EntityManagerFactory f3 = applicationContext.getBean("entityManagerFactory", EntityManagerFactory.class);
+        UserMenu menu = applicationContext.getBean(UserMenu.class);
 
-        UserDao userDao = new JPAUserDao(f2);
-
-        UserService userService = new UserServiceImpl(userDao);
-
-        UserMenu userMenu = new UserMenu(userService);
-
-
-        userMenu.start();
+        menu.start();
     }
 }
