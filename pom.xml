@@ -17,6 +17,7 @@
         <module>dimasik</module>
         <module>EShop</module>
         <module>SpringRmiClient</module>
+        <module>ServletExamples</module>
     </modules>
 
     <properties> <!-- set own variables-->
@@ -124,6 +125,14 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
         </dependency>
+
+        <!--Servlet libs-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
 
     </dependencies>
 
