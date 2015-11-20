@@ -5,7 +5,8 @@
 </head>
 <body>
 
-<%-- will be replced by jstl--%>
+<%@include file="header.jsp"%>
+
 <c:set var="user" value="${requestScope.myUser}"/>
 
 <div>

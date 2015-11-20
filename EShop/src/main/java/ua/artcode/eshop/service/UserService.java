@@ -13,6 +13,8 @@ public interface UserService {
     // access key
     String login(String email, String pass) throws NoUserFoundException;
 
+    User findByEmail(String email) throws NoUserFoundException;
+
     User showUserInfo(int id) throws NoUserFoundException;
 
     // update info

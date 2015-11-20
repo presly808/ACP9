@@ -2,11 +2,14 @@ package ua.artcode.eshop.listener;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ua.artcode.eshop.model.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @WebListener
 public class InitSpringContextListener implements ServletContextListener {
@@ -18,6 +21,7 @@ public class InitSpringContextListener implements ServletContextListener {
         ApplicationContext context = new ClassPathXmlApplicationContext(springLocation);
 
         servletContext.setAttribute("springContext", context);
+        servletContext.setAttribute("userSessionMap", new ConcurrentHashMap<String,User>());
     }
 
     @Override

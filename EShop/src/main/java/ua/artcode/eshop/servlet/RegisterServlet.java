@@ -18,19 +18,10 @@ import java.io.IOException;
 // domain/appName/css/
 // domain/appName/WEB-INF/
 @WebServlet(urlPatterns = {"/register"})
-public class RegisterServlet extends HttpServlet {
+public class RegisterServlet extends BaseServlet {
 
     public static final String REGISTER_JSP = "/WEB-INF/pages/register.jsp";
     public static final String USER_INFO_JSP = "/WEB-INF/pages/user-info.jsp";
-
-    private UserService userService;
-
-
-    @Override
-    public void init() throws ServletException {
-        ApplicationContext applicationContext = (ApplicationContext) getServletContext().getAttribute("springContext");
-        userService = applicationContext.getBean(UserService.class);
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

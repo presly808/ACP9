@@ -10,6 +10,7 @@ import ua.artcode.eshop.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -42,9 +43,12 @@ public class UserServiceImpl implements UserService {
         User user = userDao.find(email);
 
         // generate access key
-        String accessKey = "123456";
+        return UUID.randomUUID().toString();
+    }
 
-        return accessKey;
+    @Override
+    public User findByEmail(String email) throws NoUserFoundException {
+        return userDao.find(email);
     }
 
     @Override
