@@ -2,13 +2,29 @@ package com.artcode.myproject.model;
 
 import com.artcode.training.week3.xml.model.ToPrint;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @Column
     @ToPrint
     private String username;
+
+    @Column
     private String password;
+
     @ToPrint
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "requirements_id")
     private RentalRequirements rentalRequirements;
+
+    @Column
     @ToPrint
     private int age;
 
@@ -17,6 +33,13 @@ public class User {
         this.password = password;
         this.rentalRequirements = rentalRequirements;
         this.age = age;
+    }
+
+    public User() {
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {
@@ -53,5 +76,15 @@ public class User {
 
     public int getAge() {
         return age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", rentalRequirements=" + rentalRequirements +
+                ", age=" + age +
+                '}';
     }
 }

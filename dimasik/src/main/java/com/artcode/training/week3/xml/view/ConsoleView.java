@@ -25,11 +25,11 @@ public class ConsoleView {
 
     private static Object prepareDemoData() {
         List<User> users = new ArrayList<>();
-        users.add(new User("user1", "pass1", new RentalRequirements(1000, "text1"), 11));
-        users.add(new User("user2", "pass2", new RentalRequirements(2000, "text2"), 22));
-        users.add(new User("user3", "pass3", new RentalRequirements(3000, "text3"), 33));
-        users.add(new User("user4", "pass4", new RentalRequirements(4000, "text4"), 44));
-        users.add(new User("user5", "pass5", new RentalRequirements(5000, "text5"), 55));
+//        users.add(new User("user1", "pass1", new RentalRequirements(1000, "text1"), 11));
+//        users.add(new User("user2", "pass2", new RentalRequirements(2000, "text2"), 22));
+//        users.add(new User("user3", "pass3", new RentalRequirements(3000, "text3"), 33));
+//        users.add(new User("user4", "pass4", new RentalRequirements(4000, "text4"), 44));
+//        users.add(new User("user5", "pass5", new RentalRequirements(5000, "text5"), 55));
         return users;
     }
 

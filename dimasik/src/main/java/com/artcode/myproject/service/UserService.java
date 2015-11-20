@@ -1,7 +1,8 @@
 package com.artcode.myproject.service;
 
-/**
- * Created by dmitriyg on 9/25/2015.
- */
+import com.artcode.myproject.model.RentalRequirements;
+import com.artcode.myproject.model.User;
+
 public interface UserService {
+    User register(String username, String password, int age, RentalRequirements requirements);
 }

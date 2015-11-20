@@ -24,26 +24,31 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
 
     @Override
     public String execute(File file, String... args) {
+
         result = new ArrayList<>();
         this.filename = args[0];
+
         if (args.length > 1) {
             threadsAmount = Integer.parseInt(args[1]);
         } else {
             threadsAmount = DEFAULT_THREADS_AMOUNT;
         }
         directories.add(file);
+
         Thread searchThread = new Thread(new SearchThreadsProducer());
         searchThread.start();
+
         try {
             searchThread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         newCurrentFile = file;
         return String.join(DELIMITER_FOR_RESULT, result);
     }
 
-    class SearchThreadsProducer implements Runnable {
+    private class SearchThreadsProducer implements Runnable {
 
         public static final int PING_THREADS_DELAY = 1000;
         public static final int WAIT_FOR_FOLDER_TIMEOUT = 5000;
@@ -53,13 +58,16 @@ public class FindFileByNameUsingQueueCommand extends AbstractCommand {
         public void run() {
             List<Thread> searchingThreads = new ArrayList<>();
             while (!directories.isEmpty()) {
+
                 if (searchingThreads.size() < threadsAmount && !directories.isEmpty()) {
                     Thread searchingThread;
                     synchronized (directoriesMonitor) {
                         searchingThread = new Thread(new SearchThread(directories.remove()));
                     }
+
                     searchingThreads.add(searchingThread);
                     searchingThread.start();
+
                 } else {
                     //wait until some thread will finish his job
                     while (searchingThreads.size() == threadsAmount) {
