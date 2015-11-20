@@ -11,10 +11,14 @@
 
     <artifactId>EShop</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>EShop</name>
     <url>http://maven.apache.org</url>
+
+    <build>
+        <finalName>eshop</finalName>
+    </build>
 
 
 </project>
