@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Please, enter you credentials</title>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputText value="Username: "/>
+            <p:inputText id="username" value="#{login.username}"/>
+            <h:outputText value="Password: "/>
+
+            <p:password id="passord" value="#{login.password}" feedback="true"/>
+
+            <p:commandButton id="loginButton" value="Login" action="#{login.login}"/>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+
+</html>

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 @Repository()
 public class PostgreUserDao {
@@ -34,5 +34,13 @@ public class PostgreUserDao {
     public User create(EntityManager entityManager, User user) {
         entityManager.persist(user);
         return user;
+    }
+
+    public User getUser(String username) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<User> typedQuery =
+                entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+
+        return typedQuery.setParameter("username", username).getSingleResult();
     }
 }
