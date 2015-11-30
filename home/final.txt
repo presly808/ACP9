@@ -1,0 +1,149 @@
+1. Finish all tasks
+
+2. What you have to know before interview
+
+    2.1 Algorithms and Data Structures
+        Complexity of Algorithm
+            big O-notation
+
+        Recursion
+            http://codingbat.com/java/Recursion-1
+            Use debug for understanding
+
+        Search
+            Linear O(N)
+            BinarySearch O(logN)
+
+        Sort
+            bubble
+            insertion
+            selection
+            merge
+            quick
+
+        Data Structures
+            LinkedList(based on Node)
+            ArrayList
+            Stack, Queue, Dequeue
+            Tree -> BinaryTree, RedBlackTree(TreeSet, TreeMap)
+            Hash structures (HashSet,LinkedHashSet, HashMap, LinkedHashMap)
+
+        links:  http://www.cs.usfca.edu/~galles/visualization/Algorithms.html
+                http://visualgo.net/
+
+    2.2. OOP
+        Encapsulation, Inheritance, Polymorphism, Abstraction
+
+    2.3  OOD(design pattern)
+
+        SOLID principles
+
+        Creational
+            Factory Method, Builder, Singleton, Abstarct factory
+
+        Structural
+            Adapter, Decorator, Facade, Proxy
+
+        Behavioral
+            Iterator, Observer, Strategy, Command, Chain of responsibility
+
+        book: Head First Design Patterns
+
+    2.3. Java Core
+        Lifecycle of program
+        JVM
+            Garbage Collector, ClassLoader -> ClassPath
+        Primitive and Reference types
+        Arrays
+        Loops
+        switch-case
+        method in java
+        access modifiers
+        final (Immutable class)
+        static
+        enum
+        Formatter, Date, Calendar
+        Exceptions(checked, unchecked)
+        try-catch-finally
+        java.io.*;(Streams)
+        Serialization
+
+        Generics
+        Collections in Java
+        Iterable <- Collection <- List,Set,Queue
+        Map
+
+        Threads
+            Thread, Runnable
+            Lifecycle of Thread
+            sleep, join, interrupt methods
+            synchronized(wait, notify, notifyAll)
+            java.util.concurrent.*;
+            dead lock situations
+
+    2.4. Networks
+        Model OSI
+        IP <- TCP, UDP
+        HTTP
+
+        Sockets in Java
+
+    2.5. Data Bases
+        MySql
+        SQL
+
+        JDBC in Java
+
+    2.6. ORM
+        JPA <- HIBERNATE
+
+    2.7. Spring
+
+    2.8. Logging
+        Slf4J <- Log4J
+
+    2.9 Testing
+        TDD
+        JUnit
+
+    2.10. Servlet API
+        JSP, JSTL
+
+    2.11 Web Services
+        SOAP, REST
+
+    2.12 Agile <- Scrum
+         Кен Швайбер любые книги по скраму
+         Scrum and XP: Записки с передовой
+         Kanban vs.Scrum: выжимаем максимум
+         Scrum.Гибкая методология разработки ПО (Майк Кен)
+         scramtrainingseries.com - легкие полезные видео
+
+    2.13 Java literature recommendation
+
+        Effective Java
+            |
+        Philosophy of Java
+            |
+        OCA/OCP Java SE 7 Programmer I & II Study Guide
+
+    Must learn by yourself front-end side
+        HTML, CSS, Javascript - http://www.codecademy.com/
+        Bootstrap (css framework)
+
+    If you want systematize english skills (for beginners)
+        http://tvkultura.ru/video/show/brand_id/14505/episode_id/114802
+
+    Join OpenSource Java Project
+        https://github.com/jtalks-org/jcommune
+
+        https://github.com/trending?l=java
+        https://github.com/trending/developers?l=java
+
+        http://www.quora.com/What-are-some-good-open-source-projects-for-beginner-programmers-for-Java
+        http://sourceforge.net/directory/os:linux/freshness:recently-updated/?q=java
+        http://stackoverflow.com/questions/2386755/open-source-java-projects-to-get-involved-in
+
+        Google Drive Materia
+        JavaTasks https://drive.google.com/open?id=0B3pUqYFBBsi-UUlMQXhrR3BDYlE
+        Books     https://drive.google.com/open?id=0B3pUqYFBBsi-U3dlaWd1SERYejg
