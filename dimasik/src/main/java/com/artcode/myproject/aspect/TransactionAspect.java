@@ -8,16 +8,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 @Aspect
-public class Transaction {
+public class TransactionAspect {
 
-    @Around(value = "@annotation(com.artcode.myproject.aspect.Transactional) && @args(entityManager,..)", argNames = "joinPoint,entityManager")
+    @Around(value = "@annotation(com.artcode.myproject.aspect.Transactional) && args(entityManager,..)", argNames = "joinPoint,entityManager")
     public Object wrapTransaction(ProceedingJoinPoint joinPoint, EntityManager entityManager) {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            Object obj = joinPoint.proceed();
+            Object o = joinPoint.proceed();
             transaction.commit();
-            return obj;
+            return o;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             transaction.rollback();

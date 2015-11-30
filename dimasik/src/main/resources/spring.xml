@@ -10,7 +10,7 @@
                            http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-    <context:property-placeholder location="database.properties"/>
+    <context:property-placeholder location="classpath:database.properties"/>
 
     <context:annotation-config/>
 
@@ -42,6 +42,6 @@
         </property>
     </bean>
 
-    <bean id="aspect" class="com.artcode.myproject.aspect.Transaction"/>
+    <bean id="aspect" class="com.artcode.myproject.aspect.TransactionAspect"/>
 
 </beans>
