@@ -18,6 +18,9 @@
         <module>EShop</module>
         <module>SpringRmiClient</module>
         <module>ServletExamples</module>
+        <module>SoapClient</module>
+        <module>RestServer</module>
+        <module>GeneratedRestClient</module>
     </modules>
 
     <properties> <!-- set own variables-->
@@ -30,6 +33,7 @@
         <mysql-connector-java.version>5.1.6</mysql-connector-java.version>
         <spring.version>4.2.2.RELEASE</spring.version>
         <aspectj.version>1.8.7</aspectj.version>
+        <jersey.version>1.19</jersey.version>
     </properties>
 
 
@@ -138,6 +142,21 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+
+        <!-- Jersey -->
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-servlet</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
 
 
     </dependencies>
