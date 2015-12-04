@@ -5,15 +5,120 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<script src="http://maps.google.com/maps/api/js?sensor=true|false" type="text/javascript"></script>
 
 <h:head>
-
+    <link rel="stylesheet" type="text/css" href="css/font.css"/>
+    <title>My Rent</title>
 </h:head>
 
-<h:body>
-    <h3>Welcome to MyRent</h3>
-    <p:link outcome="WEB-INF/pages/login.xhtml" value="Login"/>
+<h:body style="background: #4A708B">
+    <h1>Welcome to MyRent</h1>
+    <p:growl id="messages" showDetail="true"/>
 
+    <p:gmap id="map" type="ROADMAP" center="50.4530100, 30.513107" zoom="13" style="width:100%;height:885px"
+            model="#{addRentalPointsView.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map"/>
+
+    <p:overlayPanel for="map" hideEffect="fade" at="top" my="bottom">
+        <p:link outcome="pages/login" value="Login"/>
+    </p:overlayPanel>
+
+    <p:dialog widgetVar="dlg" showEffect="fade" header="Add rental requirement" draggable="true" focus="description"
+              onHide="cancel()">
+        <h:form prependId="false">
+            <h:panelGrid columns="1">
+
+                <!--Cost-->
+                <h:panelGrid columns="1" cellpadding="5">
+                    <h:outputLabel for="cost" value="Cost"/>
+                    <h:outputText id="cost"
+                                  value="Between #{addRentalPointsView.minCost} and #{addRentalPointsView.maxCost} (UAH/month)"/>
+                    <p:slider for="min,max" display="cost" style="width: 400px" range="true"
+                              maxValue="#{addRentalPointsView.maxCost}" minValue="#{addRentalPointsView.minCost}"
+                              displayTemplate="Between {min} and {max}"/>
+                    <h:inputHidden id="min" value="#{addRentalPointsView.minCost}"/>
+                    <h:inputHidden id="max" value="#{addRentalPointsView.maxCost}"/>
+                </h:panelGrid>
+
+                <!--Description-->
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="description" value="Description:"/>
+                    <p:inputText id="description" value="#{addRentalPointsView.description}"/>
+                </h:panelGrid>
+
+                <!--Apt Types-->
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="aptTypes" value="Appartments types:"/>
+                    <p:selectCheckboxMenu id="aptTypes" value="#{addRentalPointsView.aptTypes}" label="Types"
+                                          panelStyle="width:300px;height: 200px"
+                                          filter="true" filterMatchMode="contains"
+                                          required="true" requiredMessage="Select at least 1 type">
+                        <f:selectItems var="" value="#{addRentalPointsView.allTypes}"/>
+                    </p:selectCheckboxMenu>
+                </h:panelGrid>
+
+                <!--Buttons-->
+                <f:facet name="footer">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:commandButton value="Add" actionListener="#{addRentalPointsView.addRequirement}"
+                                         update=":messages"
+                                         oncomplete="markerAddComplete(args)"/>
+                        <p:commandButton value="Cancel" onclick="return cancel()"/>
+                    </h:panelGrid>
+                </f:facet>
+            </h:panelGrid>
+
+            <h:inputHidden id="lat" value="#{addRentalPointsView.lat}"/>
+            <h:inputHidden id="lng" value="#{addRentalPointsView.lng}"/>
+        </h:form>
+    </p:dialog>
+
+    <script type="text/javascript">
+        var currentMarker = null;
+
+        function handlePointClick(event) {
+            if (currentMarker === null) {
+                document.getElementById('lat').value = event.latLng.lat();
+                document.getElementById('lng').value = event.latLng.lng();
+
+                currentMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+                });
+
+                PF('map').addOverlay(currentMarker);
+
+                PF('dlg').show();
+            }
+        }
+
+        function markerAddComplete(args) {
+            if (args.validationFailed) {
+                PF('dlg').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('dlg').hide();
+                $('#loginLink').fadeOut();
+
+                var description = document.getElementById('description');
+                currentMarker.setTitle(description.value);
+                description.value = "";
+
+                currentMarker = null;
+                PF('dlg').hide();
+            }
+        }
+
+        function cancel() {
+            PF('dlg').hide();
+            currentMarker.setMap(null);
+            currentMarker = null;
+
+            return false;
+        }
+    </script>
 </h:body>
 </html>

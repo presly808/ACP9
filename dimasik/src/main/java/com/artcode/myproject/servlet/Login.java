@@ -12,8 +12,8 @@ import javax.persistence.NoResultException;
 @ManagedBean
 public class Login {
 
-    public static final String ERROR_LOGIN_JSP = "/WEB-INF/pages/error-login";
-    public static final String USER_INFO_JSP = "/WEB-INF/pages/user-info";
+    public static final String ERROR_LOGIN_JSP = "/pages/error-login";
+    public static final String USER_INFO_JSP = "/pages/user-info";
     private UserService userService;
     private String username;
     private String password;
@@ -26,8 +26,9 @@ public class Login {
     }
 
     public String login() {
+        User user;
         try {
-            User user = userService.getUserByUsername(username);
+            user = userService.getUserByUsername(username);
             if (!user.getPassword().equals(password)) {
                 message = "incorrect password for " + username;
                 return ERROR_LOGIN_JSP;
@@ -36,6 +37,7 @@ public class Login {
             message = "there is no user with username " + username;
             return ERROR_LOGIN_JSP;
         }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentUser", user);
         return USER_INFO_JSP;
     }
 
